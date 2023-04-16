@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine,text
-from flask import Flask
+from flask import Flask,jsonify
 from flask_restful import Resource, Api, abort, reqparse
 import configs as cf
 
@@ -28,7 +28,11 @@ class getData(Resource):
     
     def get(self):
         get_data = conn.execute(text(self.sql_query)).fetchall()
-        print(get_data)
+        return jsonify(
+            id = get_data[0][0],
+            task_name = get_data[0][1],
+            task_summary = get_data[0][2]
+        )
 
 
 
